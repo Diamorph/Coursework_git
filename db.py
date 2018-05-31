@@ -1,6 +1,7 @@
 import psycopg2
 import random
 import pandas as pd
+#from main import  count
 
 def connect_db():
     try:
@@ -9,6 +10,39 @@ def connect_db():
     except:
         print("I am unable to connect to the database")
 
+
+def generate_data():
+    conn = connect_db()
+    cursor = conn.cursor()
+
+    for i in range(100):
+        try:
+            user_id = 'name'
+            assembly = random.uniform(0, 0.1)
+            print(assembly)
+            c = random.uniform(0, 0.1)
+            c1 = random.uniform(0, 0.1)
+            c2 = random.uniform(0, 0.1)
+            html = random.uniform(0, 0.1)
+            css = random.uniform(0, 0.1)
+            javascript = random.uniform(0, 0.1)
+            php = random.uniform(0, 0.1)
+            python = random.uniform(0, 0.1)
+            angular2 = random.uniform(0, 0.1)
+            vue = random.uniform(0, 0.1)
+            java = random.uniform(0, 0.1)
+            scala = random.uniform(0, 0.1)
+            if(assembly + c + c1+c2+html+css+javascript+php+python+angular2+vue+java+scala) > 1:
+                continue
+            else:
+                print(user_id, assembly, c, c1, c2, html, css, javascript, php, python, angular2, vue, java, scala)
+                cursor.execute(
+                    'INSERT INTO public.git(user_id, assembly, c, c_plus_plus, c_sharp, html, css, javascript, php, python, angular2, vue, java, scala) '
+                    'VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)',
+                    (user_id, assembly, c, c1, c2, html, css, javascript, php, python, angular2, vue, java, scala))
+                conn.commit()
+        except ValueError:
+            continue
 
 def read_data():
     df = pd.read_csv('user-languages.csv', escapechar='`', low_memory=True)
@@ -44,3 +78,6 @@ def read_data():
 
 
 #read_data()
+# assembly = random.uniform(0, 0.1)
+# print(assembly)
+#generate_data(5)
